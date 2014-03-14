@@ -3,7 +3,14 @@ set modelines=0		" CVE-2007-2438
 
 syntax enable
 set background=dark
-colorscheme solarized
+"colorscheme solarized
+
+"设置vim启动默认自动开启NERDTree，并且光标在编辑框
+autocmd VimEnter * NERDTree
+wincmd w
+autocmd VimEnter * wincmd w
+"当退出时，如果编辑区是空的时候，退出整个vim
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Normally we use vim-extensions. If you want true vi-compatibility
 " remove change the following statements
@@ -51,14 +58,14 @@ set incsearch
 set gdefault
 " 行内替换
 
-set encoding=utf-8
+"set encoding=utf-8
 set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936,utf-16,big5,euc-jp,latin1
 " 编码设置
 
-colorscheme torte
+colorscheme solarized 
 " 设置颜色主题
 
-"set guifont=Menlo:h16:cANSI
+set guifont=Courier\ New:h14
 " 设置字体
 
 set langmenu=zn_CN.UTF-8
@@ -98,13 +105,19 @@ set linespace=2
 set whichwrap=b,s,<,>,[,]
 " 开启Normal或Visual模式下Backspace键，空格键，左方向键，右方向键，Insert或replace模式下左方向键，右方向键跳行的功能
 
+setlocal omnifunc=javacomplete#Complete
+autocmd FileType java set omnifunc=javacomplete#Complete
+autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
+autocmd FileType java inoremap <buffer> . .<C-X><C-O><C-P><Down>
+autocmd FileType java inoremap <expr> <CR>  pumvisible()?"\<C-Y>":"<CR>"
+
 hi Comment ctermfg=6
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 Helptags
 
 "powerline{
- set guifont=PowerlineSymbols\ for\ Powerline
+ "set guifont=PowerlineSymbols\ for\ Powerline
  set nocompatible
  set t_Co=256
  let g:Powerline_symbols = 'fancy'
