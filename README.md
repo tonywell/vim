@@ -1,4 +1,4 @@
 vim
 ===
 
-vim
+vim配置
