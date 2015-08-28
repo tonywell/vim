@@ -54,6 +54,9 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 nnoremap [b :bp<CR>
 nnoremap ]b :bn<CR>
 
+" Bbye设置
+" 由于原生的:bd在删除当前buffer时会将整个窗口关闭，故使用Bbye的:Bd
+nnoremap bd :Bd<CR>
 
 " Normally we use vim-extensions. If you want true vi-compatibility
 " remove change the following statements
