@@ -7,10 +7,16 @@ syntax on
 set background=dark
 "colorscheme solarized
 
+"设置按esc中文切换到英文输入法
+set noimdisable
+autocmd! InsertLeave * set imdisable|set iminsert=0
+autocmd! InsertEnter * set noimdisable|set iminsert=0
+
 "设置vim启动默认自动开启NERDTree，并且光标在编辑框
-"autocmd VimEnter * NERDTree
-"wincmd w
-"autocmd VimEnter * wincmd w
+autocmd VimEnter * NERDTree
+wincmd w
+autocmd VimEnter * wincmd w
+
 "当退出时，如果编辑区是空的时候，退出整个vim
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
@@ -29,8 +35,25 @@ let NERDTreeAutoDeleteBuffer=1
 
 " 显示/隐藏 MiniBufExplorer 窗口
 "nnoremap <silent> bl :MBEToggle<cr>
-nnoremap <silent> bn :MBEbn<cr>
-nnoremap <silent> bp :MBEbp<cr>
+"nnoremap <silent> bn :MBEbn<cr>
+"nnoremap <silent> bp :MBEbp<cr>
+
+"airline配置
+set laststatus=2
+" 使用powerline打过补丁的字体
+"let g:airline_powerline_fonts = 1
+" 开启tabline
+let g:airline#extensions#tabline#enabled = 1
+" tabline中当前buffer两端的分隔字符
+let g:airline#extensions#tabline#left_sep = ' '
+" tabline中未激活buffer两端的分隔字符
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" tabline中buffer显示编号
+let g:airline#extensions#tabline#buffer_nr_show = 1
+" 映射切换buffer的键位
+nnoremap [b :bp<CR>
+nnoremap ]b :bn<CR>
+
 
 " Normally we use vim-extensions. If you want true vi-compatibility
 " remove change the following statements
@@ -128,6 +151,14 @@ set cursorcolumn
 set whichwrap=b,s,<,>,[,]
 " 开启Normal或Visual模式下Backspace键，空格键，左方向键，右方向键，Insert或replace模式下左方向键，右方向键跳行的功能
 
+
+"if has("gui_macvim")
+"  set guifont=苹方-简:h12
+  " Don't beep
+
+"set visualbell
+"endif
+
 setlocal omnifunc=javacomplete#Complete
 autocmd FileType java set omnifunc=javacomplete#Complete
 autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
@@ -159,9 +190,9 @@ Helptags
 
 "powerline{
  "set guifont=PowerlineSymbols\ for\ Powerline
- set nocompatible
- set t_Co=256
- let g:Powerline_symbols = 'fancy'
+ "set nocompatible
+ "set t_Co=256
+ "let g:Powerline_symbols = 'fancy'
 "}
 
 set ambiwidth=double
