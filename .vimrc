@@ -18,14 +18,14 @@ wincmd w
 autocmd VimEnter * wincmd w
 
 "当退出时，如果编辑区是空的时候，退出整个vim
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 nnoremap <silent> fl :NERDTree<CR>
 " 设置NERDTree子窗口宽度
 let NERDTreeWinSize=32
 " 设置NERDTree子窗口位置
-let NERDTreeWinPos="right"
+let NERDTreeWinPos="left"
 " 显示隐藏文件
 let NERDTreeShowHidden=1
 " NERDTree 子窗口中不显示冗余帮助信息
@@ -41,7 +41,7 @@ let NERDTreeAutoDeleteBuffer=1
 "airline配置
 set laststatus=2
 " 使用powerline打过补丁的字体
-"let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 " 开启tabline
 let g:airline#extensions#tabline#enabled = 1
 " tabline中当前buffer两端的分隔字符
@@ -111,7 +111,8 @@ set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936,utf-16,big5,e
 colorscheme solarized 
 " 设置颜色主题
 
-set guifont=Courier\ New:h14
+"set guifont=Courier\ New:h14
+set guifont=Anonymous\ Pro\ for\ Powerline:h14
 " 设置字体
 
 set langmenu=zn_CN.UTF-8
