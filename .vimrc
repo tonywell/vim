@@ -5,58 +5,18 @@ syntax enable
 "开启语法高亮功能
 syntax on
 set background=dark
-"colorscheme solarized
+colorscheme solarized
+
 
 "设置按esc中文切换到英文输入法
 set noimdisable
 autocmd! InsertLeave * set imdisable|set iminsert=0
 autocmd! InsertEnter * set noimdisable|set iminsert=0
 
-"设置vim启动默认自动开启NERDTree，并且光标在编辑框
-autocmd VimEnter * NERDTree
-wincmd w
-autocmd VimEnter * wincmd w
-
-"当退出时，如果编辑区是空的时候，退出整个vim
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
-nnoremap <silent> fl :NERDTree<CR>
-" 设置NERDTree子窗口宽度
-let NERDTreeWinSize=32
-" 设置NERDTree子窗口位置
-let NERDTreeWinPos="left"
-" 显示隐藏文件
-let NERDTreeShowHidden=1
-" NERDTree 子窗口中不显示冗余帮助信息
-let NERDTreeMinimalUI=1
-" 删除文件时自动删除文件对应 buffer
-let NERDTreeAutoDeleteBuffer=1
-
 " 显示/隐藏 MiniBufExplorer 窗口
 "nnoremap <silent> bl :MBEToggle<cr>
 "nnoremap <silent> bn :MBEbn<cr>
 "nnoremap <silent> bp :MBEbp<cr>
-
-"airline配置
-set laststatus=2
-" 使用powerline打过补丁的字体
-let g:airline_powerline_fonts = 1
-" 开启tabline
-let g:airline#extensions#tabline#enabled = 1
-" tabline中当前buffer两端的分隔字符
-let g:airline#extensions#tabline#left_sep = ' '
-" tabline中未激活buffer两端的分隔字符
-let g:airline#extensions#tabline#left_alt_sep = '|'
-" tabline中buffer显示编号
-let g:airline#extensions#tabline#buffer_nr_show = 1
-" 映射切换buffer的键位
-nnoremap [b :bp<CR>
-nnoremap ]b :bn<CR>
-
-" Bbye设置
-" 由于原生的:bd在删除当前buffer时会将整个窗口关闭，故使用Bbye的:Bd
-nnoremap bd :Bd<CR>
 
 " Normally we use vim-extensions. If you want true vi-compatibility
 " remove change the following statements
@@ -71,6 +31,13 @@ au BufWrite /private/etc/pw.* set nowritebackup
 autocmd InsertLeave * se nocul
 autocmd InsertEnter * se cul
 " 用浅色高亮当前行
+
+nnoremap ∆ :m .+1<CR>==
+nnoremap ˚ :m .-2<CR>==
+inoremap ∆ <Esc>:m .+1<CR>==gi
+inoremap ˚ <Esc>:m .-2<CR>==gi
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
 
 set smartindent
 " 智能对齐
@@ -108,7 +75,7 @@ set gdefault
 set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936,utf-16,big5,euc-jp,latin1
 " 编码设置
 
-colorscheme solarized 
+colorscheme solarized
 " 设置颜色主题
 
 "set guifont=Courier\ New:h14
@@ -188,15 +155,132 @@ let mapleader=","
 " 注释开关
 
 hi Comment ctermfg=6
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-Helptags
+"runtime bundle/vim-pathogen/autoload/pathogen.vim
+"call pathogen#infect()
+"Helptags
 
-"powerline{
- "set guifont=PowerlineSymbols\ for\ Powerline
- "set nocompatible
- "set t_Co=256
- "let g:Powerline_symbols = 'fancy'
-"}
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+
+"airline配置开始
+Bundle 'bling/vim-airline'
+"airline配置
+set laststatus=2
+" 使用powerline打过补丁的字体
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+let g:airline_theme = 'durant'
+let g:airline_symbols.space = "\ua0"
+let g:airline_exclude_filename = []
+let g:Powerline_symbols='fancy'
+set t_Co=256
+let Powerline_symbols='fancy'
+let g:bufferline_echo=0
+" 开启tabline
+let g:airline#extensions#tabline#enabled = 1
+" tabline中当前buffer两端的分隔字符
+let g:airline#extensions#tabline#left_sep = ' '
+" tabline中未激活buffer两端的分隔字符
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" tabline中buffer显示编号
+let g:airline#extensions#tabline#buffer_nr_show = 1
+" 映射切换buffer的键位
+nnoremap [b :bp<CR>
+nnoremap ]b :bn<CR>
+"airline配置结束
+
+"NERDTree插件配置开始
+Bundle 'scrooloose/nerdtree'
+"设置vim启动默认自动开启NERDTree，并且光标在编辑框
+autocmd VimEnter * NERDTree
+wincmd w
+autocmd VimEnter * wincmd w
+
+"当退出时，如果编辑区是空的时候，退出整个vim
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
+nnoremap <silent> fl :NERDTree<CR>
+" 设置NERDTree子窗口宽度
+let NERDTreeWinSize=32
+" 设置NERDTree子窗口位置
+let NERDTreeWinPos="left"
+" 显示隐藏文件
+let NERDTreeShowHidden=1
+" NERDTree 子窗口中不显示冗余帮助信息
+let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let NERDTreeAutoDeleteBuffer=1
+"NERDTree插件配置结束
+
+Bundle 'fatih/vim-go'
+
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
+
+" YCM settings
+let g:ycm_key_list_select_completion = ['', '']
+let g:ycm_key_list_previous_completion = ['', '']
+let g:ycm_key_invoke_completion = '<C-Space>'
+
+" UltiSnips settings
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+Bundle 'majutsushi/tagbar'
+"nmap <Leader>tb :TagbarToggle<CR>		"快捷键设置
+let g:tagbar_ctags_bin='ctags'			"ctags程序的路径
+let g:tagbar_width=30					"窗口宽度的设置
+
+"go tagbar
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
+
+Bundle 'mattn/emmet-vim'
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
+Bundle 'klen/python-mode'
+
+Bundle 'bbye'
+" Bbye设置
+" 由于原生的:bd在删除当前buffer时会将整个窗口关闭，故使用Bbye的:Bd
+nnoremap bd :Bd<CR>
+
+Bundle 'kien/ctrlp.vim'
+Bundle 'danro/rename.vim'
+Bundle 'kchmck/vim-coffee-script'
+"创建文件
+Bundle 'pbrisbin/vim-mkdir'
 
 set ambiwidth=double
