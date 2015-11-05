@@ -48,6 +48,9 @@ set autoindent
 set confirm
 " 在处理未保存或只读文件的时候，弹出确认
 
+"设置在vim中可以使用鼠标
+set mouse=a
+
 set tabstop=4
 " Tab键的宽度
 
@@ -130,21 +133,6 @@ set whichwrap=b,s,<,>,[,]
 "set visualbell
 "endif
 
-setlocal omnifunc=javacomplete#Complete
-autocmd FileType java set omnifunc=javacomplete#Complete
-autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
-"autocmd FileType java inoremap <buffer> . .<C-X><C-O><C-P><Down>
-"autocmd FileType java inoremap <expr> <CR>  pumvisible()?"\<C-Y>":"<CR>"
-
-" 随 vim 自启动
-let g:indent_guides_enable_on_vim_startup=1
-" 从第二层开始可视化显示缩进
-let g:indent_guides_start_level=2
-" 色块宽度
-let g:indent_guides_guide_size=1
-" 快捷键 i 开/关缩进可视化
-:nmap <silent> <Leader>i <Plug>IndentGuidesToggle
-
 " 基于缩进或语法进行代码折叠
 "set foldmethod=indent
 set foldmethod=syntax
@@ -154,18 +142,45 @@ set nofoldenable
 let mapleader=","
 " 注释开关
 
+"检测文件类型
+filetype on
+"针对不同的文件采取不同的缩进方式
+filetype indent on
+filetype plugin on           " 针对不同的文件类型加载对应的插件
+filetype plugin indent on    " 启用自动补全
+
+
 hi Comment ctermfg=6
 "runtime bundle/vim-pathogen/autoload/pathogen.vim
 "call pathogen#infect()
 "Helptags
 
+"****************************************************************
+"                     vundle配置
+"****************************************************************
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
-
-"airline配置开始
 Bundle 'bling/vim-airline'
-"airline配置
+Bundle 'scrooloose/nerdtree'
+Bundle 'fatih/vim-go'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
+Bundle 'majutsushi/tagbar'
+Bundle 'mattn/emmet-vim'
+Bundle 'klen/python-mode'
+Bundle 'bbye'
+Bundle 'kien/ctrlp.vim'
+Bundle 'danro/rename.vim'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'pbrisbin/vim-mkdir'
+Bundle 'jiangmiao/auto-pairs'
+Bundle 'nathanaelkane/vim-indent-guides'
+
+"****************************************************************
+"airline配置开始
+"****************************************************************
 set laststatus=2
 " 使用powerline打过补丁的字体
 let g:airline_powerline_fonts = 1
@@ -192,8 +207,9 @@ nnoremap [b :bp<CR>
 nnoremap ]b :bn<CR>
 "airline配置结束
 
-"NERDTree插件配置开始
-Bundle 'scrooloose/nerdtree'
+"***************************************************************
+"          NERDTree配置
+"***************************************************************
 "设置vim启动默认自动开启NERDTree，并且光标在编辑框
 autocmd VimEnter * NERDTree
 wincmd w
@@ -204,6 +220,14 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 nnoremap <silent> fl :NERDTree<CR>
+"显示增强
+"let NERDChristmasTree=1
+"自动调整焦点
+"let NERDTreeAutoCenter=1
+"鼠标模式:目录单击,文件双击
+"let NERDTreeMouseMode=2
+"高亮显示当前文件或目录
+"let NERDTreeHightCursorline=1
 " 设置NERDTree子窗口宽度
 let NERDTreeWinSize=32
 " 设置NERDTree子窗口位置
@@ -216,23 +240,25 @@ let NERDTreeMinimalUI=1
 let NERDTreeAutoDeleteBuffer=1
 "NERDTree插件配置结束
 
-Bundle 'fatih/vim-go'
-
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
-
+"****************************************************************
 " YCM settings
+"****************************************************************
 let g:ycm_key_list_select_completion = ['', '']
 let g:ycm_key_list_previous_completion = ['', '']
 let g:ycm_key_invoke_completion = '<C-Space>'
+let g:ycm_use_ultisnips_completer = 1
 
+"****************************************************************
 " UltiSnips settings
+"****************************************************************
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsUsePythonVersion = 2
 
-Bundle 'majutsushi/tagbar'
+"****************************************************************
+"                Tagbar配置
+"****************************************************************
 "nmap <Leader>tb :TagbarToggle<CR>		"快捷键设置
 let g:tagbar_ctags_bin='ctags'			"ctags程序的路径
 let g:tagbar_width=30					"窗口宽度的设置
@@ -266,21 +292,32 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
-Bundle 'mattn/emmet-vim'
+"****************************************************************
+"               emmet-vim配置
+"****************************************************************
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 
-Bundle 'klen/python-mode'
-
-Bundle 'bbye'
+"****************************************************************
 " Bbye设置
+"****************************************************************
 " 由于原生的:bd在删除当前buffer时会将整个窗口关闭，故使用Bbye的:Bd
 nnoremap bd :Bd<CR>
 
-Bundle 'kien/ctrlp.vim'
-Bundle 'danro/rename.vim'
-Bundle 'kchmck/vim-coffee-script'
-"创建文件
-Bundle 'pbrisbin/vim-mkdir'
+"****************************************************************
+"               vim-indent-guides配置
+"****************************************************************
+" 随 vim 自启动
+let g:indent_guides_enable_on_vim_startup=1
+" 从第二层开始可视化显示缩进
+let g:indent_guides_start_level=2
+" 色块宽度
+let g:indent_guides_guide_size=1
+" 快捷键 i 开/关缩进可视化
+:nmap <silent> <Leader>i <Plug>IndentGuidesToggle"
+
+"****************************************************************
+"               javacomplete配置
+"****************************************************************
 
 set ambiwidth=double
