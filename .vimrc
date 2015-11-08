@@ -1,4 +1,4 @@
-" Configuration file for vim
+"Configuration file for vim
 set modelines=0		" CVE-2007-2438
 
 syntax enable
@@ -12,11 +12,6 @@ colorscheme solarized
 set noimdisable
 autocmd! InsertLeave * set imdisable|set iminsert=0
 autocmd! InsertEnter * set noimdisable|set iminsert=0
-
-" 显示/隐藏 MiniBufExplorer 窗口
-"nnoremap <silent> bl :MBEToggle<cr>
-"nnoremap <silent> bn :MBEbn<cr>
-"nnoremap <silent> bp :MBEbp<cr>
 
 " Normally we use vim-extensions. If you want true vi-compatibility
 " remove change the following statements
@@ -151,9 +146,6 @@ filetype plugin indent on    " 启用自动补全
 
 
 hi Comment ctermfg=6
-"runtime bundle/vim-pathogen/autoload/pathogen.vim
-"call pathogen#infect()
-"Helptags
 
 "****************************************************************
 "                     vundle配置
@@ -251,6 +243,8 @@ let g:ycm_use_ultisnips_completer = 1
 "****************************************************************
 " UltiSnips settings
 "****************************************************************
+let g:UltiSnipsSnippetDirectories=['UltiSnips']
+let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
