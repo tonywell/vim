@@ -1,0 +1,197 @@
+" ==========================================
+" bundle 插件管理和配置项
+" ==========================================
+
+set nocompatible "非兼容vi模式
+"配置Vundle
+filetype off
+set set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" ################### 插件管理 ###################
+"
+" 使用Vundle来管理插件
+" vim plugin bundle control, command model
+"     :BundleInstall     install 安装配置的插件
+"     :BundleInstall!    update  更新
+"     :BundleClean       remove plugin not in list 删除本地无用插件
+Bundle 'gmarik/vundle'
+
+" #####################状态栏显示增强#############
+Bundle 'bling/vim-airline'
+set laststatus=2
+" 使用powerline打过补丁的字体
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+   let g:airline_symbols = {}
+endif
+let g:airline_theme = 'durant'
+let g:airline_symbols.space = "\ua0"
+let g:airline_exclude_filename = []
+let g:Powerline_symbols='fancy'
+set t_Co=256
+let Powerline_symbols='fancy'
+let g:bufferline_echo=0
+" 开启tabline
+let g:airline#extensions#tabline#enabled = 1
+" tabline中当前buffer两端的分隔字符
+let g:airline#extensions#tabline#left_sep = ' '
+" tabline中未激活buffer两端的分隔字符
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" tabline中buffer显示编号
+let g:airline#extensions#tabline#buffer_nr_show = 1
+" 映射切换buffer的键位
+nnoremap [b :bp<CR>
+nnoremap ]b :bn<CR>
+
+"##################缩进显示增强###################
+Bundle 'nathanaelkane/vim-indent-guides'
+" 随 vim 自启动
+let g:indent_guides_enable_on_vim_startup=1
+" 从第二层开始可视化显示缩进
+let g:indent_guides_start_level=2
+" 色块宽度
+let g:indent_guides_guide_size=1
+" 快捷键 i 开/关缩进可视化
+:nmap <silent> <Leader>i <Plug>IndentGuidesToggle"
+
+" #################括号显示增强###################
+Bundle 'kien/rainbow_parentheses.vim'
+" 不加入这行, 防止黑色括号出现, 很难识别
+" \ ['black',       'SeaGreen3'],
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen', 'RoyalBlue3'],
+    \ ['darkcyan', 'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red', 'firebrick3'],
+    \ ]
+
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+"##################创建文件#######################
+Bundle 'pbrisbin/vim-mkdir'
+
+"##################标签###########################
+Bundle 'majutsushi/tagbar'
+"nmap <Leader>tb :TagbarToggle<CR>		"快捷键设置
+let g:tagbar_ctags_bin='ctags'			"ctags程序的路径
+let g:tagbar_width=30					"窗口宽度的设置
+
+"go tagbar
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+	\ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+	\ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
+
+"##################目录导航#######################
+Bundle 'scrooloose/nerdtree'
+"设置vim启动默认自动开启NERDTree，并且光标在编辑框
+autocmd VimEnter * NERDTree
+wincmd w
+autocmd VimEnter * wincmd w
+"当退出时，如果编辑区是空的时候，退出整个vim
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
+ nnoremap <silent> fl :NERDTree<CR>
+"显示增强
+let NERDChristmasTree=1
+"自动调整焦点
+let NERDTreeAutoCenter=1
+"鼠标模式:目录单击,文件双击
+let NERDTreeMouseMode=2
+"高亮显示当前文件或目录
+let NERDTreeHightCursorline=1
+" 设置NERDTree子窗口宽度
+let NERDTreeWinSize=32
+" 设置NERDTree子窗口位置
+let NERDTreeWinPos="left"
+" 显示隐藏文件
+let NERDTreeShowHidden=1
+" NERDTree 子窗口中不显示冗余帮助信息
+let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let NERDTreeAutoDeleteBuffer=1"
+
+"##################自动补全#######################
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
+
+" *********YCM***********
+let g:ycm_key_list_select_completion = ['', '']
+let g:ycm_key_list_previous_completion = ['', '']
+let g:ycm_key_invoke_completion = '<C-Space>'
+let g:ycm_use_ultisnips_completer = 1
+"**********UltiSnips*****
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsUsePythonVersion = 2
+
+" ###### emmet HTML complete #####################
+Bundle "mattn/emmet-vim
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
+"##################括号自动匹配###################
+Bundle 'jiangmiao/auto-pairs'
+
+"#######buffer控制################################
+Bundle 'bbye'
+" 由于原生的:bd在删除当前buffer时会将整个窗口关闭，故使用Bbye的:Bd
+nnoremap bd :Bd<CR>
+
+"#################文件搜索########################
+Bundle 'kien/ctrlp.vim'
+
+
+"##################语言相关#######################
+
+"*************coffee script******************
+Bundle 'kchmck/vim-coffee-script'
+
+"*************golang*************************
+Bundle 'fatih/vim-go'
+
+"*************python*************************
+Bundle 'klen/python-mode'
