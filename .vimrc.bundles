@@ -214,3 +214,6 @@ let g:html_indent_style1 = "inc"
 
 " for jquery
 Bundle 'nono/jquery.vim'
+
+" for jade
+Bundle 'digitaltoad/vim-jade'

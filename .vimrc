@@ -41,6 +41,11 @@ inoremap ˚ <Esc>:m .-2<CR>==gi
 vnoremap ∆ :m '>+1<CR>gv=gv
 vnoremap ˚ :m '<-2<CR>gv=gv
 
+" 取消备份。 视情况自己改
+set nobackup
+" 关闭交换文件
+set noswapfile
+
 set smartindent
 " 智能对齐
 
