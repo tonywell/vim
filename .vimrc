@@ -15,11 +15,12 @@ filetype plugin indent on
 set background=dark
 colorscheme solarized
 
+set encoding=utf-8
 
 "设置按esc中文切换到英文输入法
 set noimdisable
-autocmd! InsertLeave * set imdisable|set iminsert=0
-autocmd! InsertEnter * set noimdisable|set iminsert=0
+au! InsertLeave * set imdisable|set iminsert=0
+au! InsertEnter * set noimdisable|set iminsert=0
 
 " Normally we use vim-extensions. If you want true vi-compatibility
 " remove change the following statements
@@ -157,3 +158,7 @@ filetype plugin on           " 针对不同的文件类型加载对应的插件
 
 "防止特殊符号无法正常显示
 set ambiwidth=double
+
+"增加复制到系统粘贴板
+vmap <C-x> :!pbcopy<CR>   
+vmap <C-c> :w !pbcopy<CR><CR>

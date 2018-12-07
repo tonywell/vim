@@ -18,6 +18,7 @@ Bundle 'gmarik/vundle'
 
 " #####################状态栏显示增强#############
 Bundle 'bling/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
 set laststatus=2
 " 使用powerline打过补丁的字体
 let g:airline_powerline_fonts = 1
@@ -124,11 +125,15 @@ let g:tagbar_type_go = {
 "##################目录导航#######################
 Bundle 'scrooloose/nerdtree'
 "设置vim启动默认自动开启NERDTree，并且光标在编辑框
-autocmd VimEnter * NERDTree
+"au VimEnter * NERDTree
 wincmd w
-autocmd VimEnter * wincmd w
+au VimEnter * wincmd w
 "当退出时，如果编辑区是空的时候，退出整个vim
+autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
  nnoremap <silent> fl :NERDTree<CR>
@@ -169,7 +174,7 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsUsePythonVersion = 2
+let g:UltiSnipsUsePythonVersion = 3
 
 " ###### emmet HTML complete #####################
 Bundle 'mattn/emmet-vim'
@@ -217,3 +222,10 @@ Bundle 'nono/jquery.vim'
 
 " for jade
 Bundle 'digitaltoad/vim-jade'
+
+" for Dash
+Bundle 'rizzatti/dash.vim'
+
+" for Gradle
+Bundle 'groovy.vim' 
+Bundle 'tfnico/vim-gradle'
